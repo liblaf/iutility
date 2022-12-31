@@ -16,7 +16,10 @@ def cmd(ctx: click.Context) -> None:
     if ctx.invoked_subcommand:
         return
     for _, sub_cmd in cmd.commands.items():
-        sub_cmd.main(args=[], standalone_mode=False)
+        try:
+            sub_cmd.main(args=[], standalone_mode=False)
+        except:
+            pass
 
 
 cmd.add_command(cmd=cmd_apt)
