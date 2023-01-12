@@ -13,7 +13,7 @@ profile = "black"
 
 [tool.poetry]
 authors = ["Qin Li <liblaf@outlook.com>"]
-description = "My Package Manager"
+description = "My Utils"
 documentation = "https://liblaf.github.io/iutility/"
 homepage = "https://liblaf.github.io/iutility/"
 license = "MIT"
