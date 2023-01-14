@@ -6,14 +6,20 @@ from pathlib import Path
 import click
 import tomlkit
 import tomlkit.items
+from ishutils import download, move, remove, run
 from toml_sort.tomlsort import TomlSort
 
-from ..utils import download, execute, move, remove
+from .define import (
+    GITIGNORE_API,
+    INITIAL_COMMIT,
+    TEMPLATE_BRANCHES,
+    TEMPLATE_FILES,
+    TEMPLATE_GIT,
+)
 from .secret import cmd as cmd_secret
-from .typed import GITIGNORE_API, TEMPLATE_BRANCHES, TEMPLATE_FILES, TEMPLATE_GIT
 
 
-def to_pip_name(name: str) -> str:
+def package_name(name: str) -> str:
     return name.lower().replace("-", "_")
 
 
@@ -41,7 +47,7 @@ def init_pyproject(name: str, description: typing.Optional[str] = None) -> None:
     tool: tomlkit.items.Table = typing.cast(tomlkit.items.Table, pyproject["tool"])
     poetry: tomlkit.items.Table = typing.cast(tomlkit.items.Table, tool["poetry"])
     poetry["description"] = description if description else ""
-    poetry["name"] = to_pip_name(name=name)
+    poetry["name"] = name
     with open(file="pyproject.toml", mode="w") as fp:
         raw_pyproject = tomlkit.dumps(data=pyproject)
         raw_pyproject = raw_pyproject.replace("template", name)
@@ -78,7 +84,7 @@ def cmd(
     private: bool,
     name: str,
 ) -> None:
-    execute("git", "clone", "--branch", template, "--depth", "1", TEMPLATE_GIT, name)
+    run("git", "clone", "--branch", template, "--depth", "1", TEMPLATE_GIT, name)
     root: Path = Path(name)
     os.chdir(root)
     remove(path=".git")
@@ -88,14 +94,14 @@ def cmd(
     for file in TEMPLATE_FILES:
         substitute(name=name, filepath=file)
     if Path("template").exists():
-        move(src="template", dst=to_pip_name(name=name))
-    execute("git", "init")
-    execute("pre-commit", "install", "--install-hooks")
-    execute("git", "add", "--all")
-    execute("pre-commit", "run", "--all-files", check_returncode=False)
-    execute("git", "add", "--all")
-    execute("git", "commit", "--message", "fix: initial commit")
-    execute(
+        move(src="template", dst=package_name(name=name))
+    run("git", "init")
+    run("pre-commit", "install", "--install-hooks")
+    run("git", "add", "--all")
+    run("pre-commit", "run", "--all-files", check_returncode=False)
+    run("git", "add", "--all")
+    run("git", "commit", "--message", INITIAL_COMMIT)
+    run(
         "gh",
         "repo",
         "create",
@@ -106,5 +112,5 @@ def cmd(
         os.getcwd(),
     )
     if template == "python":
-        cmd_secret.main(args=["PYPI_TOKEN"], standalone_mode=False)
-    execute("git", "push", "--set-upstream", "origin", "main")
+        cmd_secret.main(args=["pypi"], standalone_mode=False)
+    run("git", "push", "--set-upstream", "origin", "main")

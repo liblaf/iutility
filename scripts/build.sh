@@ -31,4 +31,7 @@ fi
 call cd "${workspace}"
 name="$(poetry version | awk '{ print $1 }')"
 call poetry install --with build
-call pyinstaller --onefile --name "${name}" --collect-all "${name}" "entry_point.py"
+call pyinstaller --onefile --name "${name}" \
+  --collect-all "${name}" \
+  --collect-all charset_normalizer \
+  "entry_point.py"

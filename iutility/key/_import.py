@@ -1,18 +1,18 @@
 from pathlib import Path
 
 import click
+from ishutils import copy, run
 
-from ..utils import copy, execute
-from .typed import SSH_TYPES
+from .define import SSH_TYPES
 
 
 def import_gpg(prefix: Path) -> None:
-    execute("gpg", "--import", prefix / "gpg" / "secret.asc")
+    run("gpg", "--import", prefix / "gpg" / "secret.asc")
     signing_key: str = str(
-        execute("git", "config", "user.signingKey", capture_output=True).stdout,
+        run("git", "config", "user.signingKey", capture_output=True).stdout,
         encoding="utf-8",
     ).strip()
-    execute("gpg", "--edit-key", signing_key, "trust")
+    run("gpg", "--edit-key", signing_key, "trust")
 
 
 def import_ssh(prefix: Path) -> None:

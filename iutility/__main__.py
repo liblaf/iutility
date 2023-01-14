@@ -1,14 +1,14 @@
 import logging
 
 import click
+from ishutils import config
+from ishutils.log import install as log_install
 
 from . import __version__
 from .clean import cmd as cmd_clean
 from .git import cmd as cmd_git
 from .key import cmd as cmd_key
-from .logger import install as log_install
 from .update import cmd as cmd_update
-from .utils import config
 
 
 @click.group(name="iutility", context_settings={"show_default": True})
@@ -25,10 +25,10 @@ from .utils import config
 def main(log_level: str, yes: bool) -> None:
     log_level = log_level.upper()
     if log_level == "OFF":
-        log_install(77)
+        log_install(level=77)
     else:
-        log_install(logging._nameToLevel[log_level])
-    config.ask = not yes
+        log_install(level=logging.getLevelName(level=log_level))
+    config.confirm = not yes
 
 
 main.add_command(cmd=cmd_clean)

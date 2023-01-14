@@ -1,9 +1,8 @@
 import click
-
-from ..utils import execute
+from ishutils import run
 
 
 @click.command(name="pip")
 def cmd() -> None:
-    execute("conda", "clean", "--all")
-    execute("pip", "cache", "purge")
+    run("conda", "clean", "--all")
+    run("pip", "cache", "purge")

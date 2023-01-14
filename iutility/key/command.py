@@ -1,7 +1,7 @@
 import click
 
+from ._import import cmd as cmd_import
 from .export import cmd as cmd_export
-from .import_ import cmd as cmd_import
 
 
 @click.group(name="key")

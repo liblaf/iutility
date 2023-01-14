@@ -1,8 +1,7 @@
 from pathlib import Path
 
 import click
-
-from ..utils import remove
+from ishutils import remove
 
 
 @click.command(name="cache")

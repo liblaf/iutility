@@ -1,8 +1,7 @@
 import click
-
-from ..utils import execute
+from ishutils import run
 
 
 @click.command(name="tldr")
 def cmd() -> None:
-    execute("tldr", "--clear-cache")
+    run("tldr", "--clear-cache")

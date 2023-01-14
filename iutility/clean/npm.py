@@ -1,8 +1,7 @@
 import click
-
-from ..utils import execute
+from ishutils import run
 
 
 @click.command(name="npm")
 def cmd() -> None:
-    execute("pnpm", "store", "prune")
+    run("pnpm", "store", "prune")

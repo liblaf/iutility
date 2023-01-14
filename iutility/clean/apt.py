@@ -1,9 +1,8 @@
 import click
-
-from ..utils import execute
+from ishutils import run
 
 
 @click.command(name="apt")
 def cmd() -> None:
-    execute("sudo", "apt", "autoremove")
-    execute("sudo", "apt-get", "autoclean")
+    run("sudo", "apt", "autoremove")
+    run("sudo", "apt-get", "autoclean")

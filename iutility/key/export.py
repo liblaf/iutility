@@ -2,14 +2,14 @@ import os
 from pathlib import Path
 
 import click
+from ishutils import copy, run
 
-from ..utils import copy, execute
-from .typed import SSH_TYPES
+from .define import SSH_TYPES
 
 
 def export_gpg(prefix: Path) -> None:
     os.makedirs(name=prefix / "gpg", exist_ok=True)
-    execute(
+    run(
         "gpg",
         "--export-secret-keys",
         "--armor",

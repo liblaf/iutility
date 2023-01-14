@@ -1,9 +1,8 @@
 import click
-
-from ..utils import execute
+from ishutils import run
 
 
 @click.command(name="brew")
 def cmd() -> None:
-    execute("brew", "autoremove")
-    execute("brew", "cleanup")
+    run("brew", "autoremove")
+    run("brew", "cleanup")

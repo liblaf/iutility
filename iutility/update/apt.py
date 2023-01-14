@@ -1,9 +1,8 @@
 import click
-
-from ..utils import execute
+from ishutils import run
 
 
 @click.command(name="apt")
 def cmd() -> None:
-    execute("sudo", "apt", "update")
-    execute("sudo", "apt", "full-upgrade")
+    run("sudo", "apt", "update")
+    run("sudo", "apt", "full-upgrade")

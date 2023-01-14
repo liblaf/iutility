@@ -1,8 +1,7 @@
 import click
-
-from ..utils import execute
+from ishutils import run
 
 
 @click.command(name="snap")
 def cmd() -> None:
-    execute("sudo", "snap", "refresh")
+    run("sudo", "snap", "refresh")
