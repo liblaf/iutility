@@ -23,7 +23,7 @@ def init_readme(name: str, description: typing.Optional[str] = None) -> None:
         if description:
             lines.append("")
             lines.append(description)
-        fp.writelines(lines)
+        fp.writelines([line + "\n" for line in lines])
 
 
 def init_gitignore(gitignore: tuple[str]) -> None:
