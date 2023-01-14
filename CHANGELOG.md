@@ -1,3 +1,10 @@
+## 0.0.3 (2023-01-14)
+
+### Fix
+
+- migrate to ishutils
+- **git.init**: add line breaks
+
 ## 0.0.2 (2023-01-12)
 
 ### Fix
